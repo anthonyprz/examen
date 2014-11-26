@@ -19,6 +19,7 @@ public class CenaAmigosdos {
 		System.out.println("Hola, cúantas recetas quieres insertar?");
 		Scanner scan = new Scanner(System.in);
 		int numRecetas = scan.nextInt();
+		int numIngredientes = 0;
 		
 	//primer for en causa de que i sea igual a cero, menor al numero de recetas y en ordencreciente realizar lo siguiente
 			for (int i = 0; i<numRecetas; i++) {
@@ -29,7 +30,7 @@ public class CenaAmigosdos {
 				receta.setNombreReceta(scan.next());
 	//te pide el numero de recetas
 				System.out.println("Dame el nº de ingredientes de la receta");
-				int numIngredientes = scan.nextInt();
+				numIngredientes = scan.nextInt();
 
 	// segundo for en causa de que j sea igual a 0, menor al numero de ingredientes y en orden creciente realizar lo siguiente
 				for (int j= 0; j < numIngredientes; j++) {
@@ -92,6 +93,7 @@ public class CenaAmigosdos {
 		
 			}
 			fw.close();
+			
 			File archivo2 = new File ("recetas.txt");
 			//FileReader fr = new FileReader(archivo2);
 			FileInputStream fis = new FileInputStream(archivo2);
@@ -103,22 +105,27 @@ public class CenaAmigosdos {
 			linea = br2.readLine();
 			String [] campos = null;
 			System.out.println("\n estas son tus recetas");
-			while ((linea = br2.readLine()) != null) {
+			
+
+			while (linea != null) {
 			campos = linea.split(";");
-	        	System.out.println("--------------------------------");
+	        	System.out.println("<><><><><><><><><><><><><><><><>");
 	        	System.out.println("Nombre: "+campos[0]);
 	       		System.out.println("Descripcion: "+campos[2]);
 	       		String ingre = campos[1];
 	       		campos = ingre.split("#");
+	       		
 	       		for(int x=0; x<campos.length; x++){
 	       			String ingreAtribSeparados = campos[x];
 	       			String [] campos2 = ingreAtribSeparados.split("\\*");
-	       			System.out.println("Ingredientes: ");
+	       			System.out.println("Ingredientes: "+numIngredientes);
 	       			System.out.println("Nombre: "+campos2[0]);
-	       			System.out.println("Gramos: "+campos2[1]);
-	       			System.out.println("Unidades: "+campos2[2]);
-				//System.out.println(linea);
+	       			System.out.println("Gramos: "+campos2[2]);
+	       			System.out.println("Unidades: "+campos2[1]);
+	       			System.out.println("<><><><><><><><><><><><><><><><>");
+				
 			}
+			linea = br2.readLine();
 
 			//fr.close();
 
