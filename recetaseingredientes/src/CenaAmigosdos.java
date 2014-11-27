@@ -15,11 +15,13 @@ public class CenaAmigosdos {
 		//se importa el arraylist de recetas e ingredientes
 		ArrayList<Receta> recetas = new ArrayList<Receta>();
 		ArrayList<Ingrediente> ingredientes = new ArrayList<Ingrediente>();
-	//se pregunta el numero de recetas deseadas	
+		//se pregunta el numero de recetas deseadas	
 		System.out.println("Hola, cúantas recetas quieres insertar?");
 		Scanner scan = new Scanner(System.in);
 		int numRecetas = scan.nextInt();
 		int numIngredientes = 0;
+		String preparacion = null;
+
 		
 	//primer for en causa de que i sea igual a cero, menor al numero de recetas y en ordencreciente realizar lo siguiente
 			for (int i = 0; i<numRecetas; i++) {
@@ -62,9 +64,13 @@ public class CenaAmigosdos {
 		
 					ingredientes.add(ingrediente); 
 				}
+
 				receta.setIngredientes(ingredientes);
 				System.out.println("Finalmente, explícame brevemente su preparación");
-				receta.setPreparación(scan.next());
+				preparacion = scan.next();
+				receta.setPreparación(preparacion);
+				//receta.setPreparación(scan.next());
+				
 				recetas.add(receta);
 			}
 
@@ -89,11 +95,13 @@ public class CenaAmigosdos {
 
 				}
 
-				fw.write(recetas.get(k).getPreparación() + "\n");
+				fw.write(recetas.get(k).getPreparación()+ "\n");
 		
 			}
 			fw.close();
 			
+			try{
+
 			File archivo2 = new File ("recetas.txt");
 			//FileReader fr = new FileReader(archivo2);
 			FileInputStream fis = new FileInputStream(archivo2);
@@ -103,34 +111,46 @@ public class CenaAmigosdos {
 			
 			String linea;
 			linea = br2.readLine();
-			String [] campos = null;
+			String [] sitio = null;
 			System.out.println("\n estas son tus recetas");
 			
 
 			while (linea != null) {
-			campos = linea.split(";");
+			
+				sitio = linea.split(";");
 	        	System.out.println("<><><><><><><><><><><><><><><><>");
-	        	System.out.println("Nombre: "+campos[0]);
-	       		System.out.println("Descripcion: "+campos[2]);
-	       		String ingre = campos[1];
-	       		campos = ingre.split("#");
+	        	
+	        	System.out.println("Nombre: "+sitio[0]);
+	       		System.out.println("Descripcion: "+sitio[2]);
 	       		
-	       		for(int x=0; x<campos.length; x++){
-	       			String ingreAtribSeparados = campos[x];
-	       			String [] campos2 = ingreAtribSeparados.split("\\*");
+	       		String ingre = sitio[1];
+	       		sitio = ingre.split("#");
+	       		
+	       		for(int x=0; x<sitio.length; x++){
+	       			
+	       			String ingredientesseparados = sitio[x];
+	       			String [] sitio2 = ingredientesseparados.split("\\*");
+	       			
 	       			System.out.println("Ingredientes: "+numIngredientes);
-	       			System.out.println("Nombre: "+campos2[0]);
-	       			System.out.println("Gramos: "+campos2[2]);
-	       			System.out.println("Unidades: "+campos2[1]);
+	       			System.out.println("Nombre: "+sitio2[0]);
+	       			System.out.println("Gramos: "+sitio2[2]);
+	       			System.out.println("Unidades: "+sitio2[1]);
 	       			System.out.println("<><><><><><><><><><><><><><><><>");
-				
-			}
+					
+					}
+
+			//fis.close();	
 			linea = br2.readLine();
 
 			//fr.close();
 
-
+				}
+	
 		}
+		catch(Exception error){
+	    	System.out.println("Error: "+error);
+	    }
+
 	}
 }	
 
